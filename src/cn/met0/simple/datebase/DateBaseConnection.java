@@ -17,13 +17,11 @@ import java.util.Map;
  * @author Met0
  *
  */
-public  class DateBaseConnection  {
+public class DateBaseConnection {
 
 	public ResultSet getRs() {
 		return rs;
 	}
-
-	
 
 	protected Connection conn;
 	private Statement sm;
@@ -45,8 +43,7 @@ public  class DateBaseConnection  {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public Map queryToMap(String sql, Object[] objs) throws SQLException
-			 {
+	public Map queryToMap(String sql, Object[] objs) throws SQLException {
 		Map result = null;
 		rs = query(sql, objs);
 		if (rs.next()) {
@@ -67,8 +64,7 @@ public  class DateBaseConnection  {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public ResultSet query(String sql, Object[] param)
-			throws  SQLException {
+	public ResultSet query(String sql, Object[] param) throws SQLException {
 		ps = getConn().prepareStatement(sql);
 		int i = 0;
 		if (param != null) {
@@ -92,8 +88,7 @@ public  class DateBaseConnection  {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public int update(String sql, Object[] param)
-			throws  SQLException {
+	public int update(String sql, Object[] param) throws SQLException {
 		ps = getConn().prepareStatement(sql);
 		for (int i = 1; i <= param.length; i++) {
 			ps.setObject(i, param[i - 1]);
@@ -150,11 +145,11 @@ public  class DateBaseConnection  {
 	 * 获取数据库连接对象
 	 * 
 	 * @return
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
 	public Connection getConn() throws SQLException {
-		if(conn == null || conn.isClosed()){	
+		if (conn == null || conn.isClosed()) {
 			conn = DriverManager.getConnection(connUrl, name, pwd);
 		}
 		return conn;
@@ -166,15 +161,13 @@ public  class DateBaseConnection  {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public DateBaseConnection(Map conf) throws ClassNotFoundException, SQLException{
+	public DateBaseConnection(Map conf) throws ClassNotFoundException,
+			SQLException {
 		this.driver = (String) conf.get("driver");
 		Class.forName(driver);
 		this.connUrl = (String) conf.get("url");
 		this.name = (String) conf.get("name");
 		this.pwd = (String) conf.get("pwd");
 	}
-	
-	
-	
-	
+
 }
