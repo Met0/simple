@@ -22,15 +22,15 @@ public class sqlExe {
 	
 	
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
-		String str = "select * from LC_T_BACK_CARD WHERE WEBSITE_ID = @sb@";
+		String str = "select * from LC_T_CARD_INFO where card_in_no = @sb@";
 		MapExecSQL mes = new MapExecSQL(dbconf);
 		
 		
 		Map sqlParam = new HashMap();
-		sqlParam.put("sb", "110000000000000200");
+		sqlParam.put("sb", "279775194899");
 		
 		
-		System.out.println(mes.queryListMap(str, sqlParam));
+		System.out.println(mes.queryListMap(str, sqlParam).size());
 	}
 	
 }

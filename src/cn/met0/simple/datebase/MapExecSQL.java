@@ -8,11 +8,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+public class MapExecSQL extends DateBaseConnection {
 
-public class MapExecSQL extends DateBaseConnection{
+	private String sql;
+	private Object[] param;
 
 	/**
 	 * 初始化参数
+	 * 
 	 * @param conf
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
@@ -23,23 +26,21 @@ public class MapExecSQL extends DateBaseConnection{
 
 	public int update(String sql, Map<String, Object> param)
 			throws SQLException {
-		Object[] objs = getSQLParam(sql, param);
-		sql = sql.replaceAll("@(.*?)+@", "?");
-		return super.update(sql, objs);
+		getSQLParam(this.sql, param);
+		return super.update(sql, this.param);
 	}
 
 	public Map<String, Object> queryUnique(String sql, Map<String, Object> param)
 			throws SQLException {
-		Object[] objs = getSQLParam(sql, param);
-		sql = sql.replaceAll("@(.*?)+@", "?");
-		return queryToMap(sql, objs);
+		getSQLParam(sql, param);
+		return queryToMap(this.sql, this.param);
 	}
 
 	public List<Map<String, Object>> queryListMap(String sql,
 			Map<String, Object> param) throws SQLException {
-		Object[] objs = getSQLParam(sql, param);
-		sql = sql.replaceAll("@(.*?)+@", "?");
-		ResultSet rs = query(sql, objs);
+		getSQLParam(sql, param);
+
+		ResultSet rs = query(this.sql, this.param);
 
 		List result = new ArrayList<Map<String, Object>>();
 
@@ -51,27 +52,23 @@ public class MapExecSQL extends DateBaseConnection{
 		return result;
 	}
 
-	public static void main(String[] args) {
-		String sql = "@adsf@dagds@dsfds@";
-		System.out.println(sql);
-	}
-
 	/**
 	 * 
 	 * @param sql
 	 * @param param
 	 * @return
 	 */
-	private Object[] getSQLParam(String sql, Map param) {
+	private void getSQLParam(String sql, Map param) {
 		ArrayList<Object> lists = new ArrayList<Object>();
-		Pattern p = Pattern.compile("@([a-zA-Z_]+[0-9a-zA-Z_]+)@");
+		Pattern p = Pattern.compile("@(.*?)+@");
 		Matcher m = p.matcher(sql);
 		while (m.find()) {
-			String colunm = m.group(1);
-			sql.replace("@" + m.group(1) + "@", "?");
+			String colunm = m.group().replaceAll("@", "");
+			sql = sql.replace("@" + colunm + "@", "?");
 			lists.add(param.get(colunm));
 		}
-		return lists.toArray(new Object[lists.size()]);
+		this.param = lists.toArray(new Object[lists.size()]);
+		this.sql = sql.replaceAll("@(.*?)+@", "?");
 	}
 
 }
