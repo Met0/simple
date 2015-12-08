@@ -3,6 +3,7 @@ package cn.met0.simple.annotaion;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import cn.met0.simple.datebase.MapExecSQL;
 
@@ -21,7 +22,7 @@ public class sqlExe {
 	}
 	
 	
-	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+	public static void main1(String[] args) throws SQLException, ClassNotFoundException {
 		String str = "select * from LC_T_CARD_INFO where card_in_no = @sb@";
 		MapExecSQL mes = new MapExecSQL(dbconf);
 		
@@ -31,6 +32,11 @@ public class sqlExe {
 		
 		
 		System.out.println(mes.queryListMap(str, sqlParam).size());
+	}
+	
+	
+	public static void main(String[] args) {
+		Pattern.compile("src=\"http://ww\"");
 	}
 	
 }
