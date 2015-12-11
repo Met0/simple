@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import cn.met0.simple.datebase.MapExecSQL;
+import cn.met0.simple.datebase.ExecSQL;
 
 @SuppressWarnings("unchecked")
 public class sqlExe {
@@ -24,7 +24,7 @@ public class sqlExe {
 	
 	public static void main1(String[] args) throws SQLException, ClassNotFoundException {
 		String str = "select * from LC_T_CARD_INFO where card_in_no = @sb@";
-		MapExecSQL mes = new MapExecSQL(dbconf);
+		ExecSQL mes = new ExecSQL(dbconf);
 		
 		
 		Map sqlParam = new HashMap();
