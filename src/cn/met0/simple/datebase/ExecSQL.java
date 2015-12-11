@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MapExecSQL extends DateBaseConnection {
+public class ExecSQL extends DateBaseConnection {
 
 	private String sql;
 	private Object[] param;
@@ -20,22 +20,43 @@ public class MapExecSQL extends DateBaseConnection {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public MapExecSQL(Map conf) throws ClassNotFoundException, SQLException {
+	public ExecSQL(Map conf) throws ClassNotFoundException, SQLException {
 		super(conf);
 	}
 
+	/**
+	 * 更新
+	 * @param sql
+	 * @param param
+	 * @return
+	 * @throws SQLException
+	 */
 	public int update(String sql, Map<String, Object> param)
 			throws SQLException {
 		getSQLParam(this.sql, param);
 		return super.update(sql, this.param);
 	}
 
+	/**
+	 * 查询一条
+	 * @param sql
+	 * @param param
+	 * @return
+	 * @throws SQLException
+	 */
 	public Map<String, Object> queryUnique(String sql, Map<String, Object> param)
 			throws SQLException {
 		getSQLParam(sql, param);
 		return queryToMap(this.sql, this.param);
 	}
 
+	/**
+	 * 查询列表
+	 * @param sql
+	 * @param param
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Map<String, Object>> queryListMap(String sql,
 			Map<String, Object> param) throws SQLException {
 		getSQLParam(sql, param);
